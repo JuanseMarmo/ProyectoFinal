@@ -1,7 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+
 from AppCoder.models import Vender
+
+from AppCoder.forms import VenderFormulario
+
 
 
 
@@ -31,14 +35,30 @@ def vender(request):
 
     if request.method == "POST":
 
-        venderalgo = Vender(marca=request.POST["marca"] , modelo=request.POST["modelo"], anio=request.POST["anio"]) #VA EN MAYUSCULA LPM
+        VFormulario = VenderFormulario(request.POST)
+
+        if VFormulario.is_valid():
+
+            informacion =VFormulario.cleaned_data
+
+            venderalgo = Vender(marca=informacion["marca"] , modelo=informacion["modelo"], anio=informacion["anio"]) #VA EN MAYUSCULA LPM
         
 
-        venderalgo.save()
+            venderalgo.save()
 
-        return render(request, 'AppCoder/inicio.html')
+            return render(request, 'AppCoder/inicio.html')
+
+    else:
+
+        VFormulario = VenderFormulario()
+
+       
 
 
-    return render(request, 'AppCoder/vender.html')
+    return render(request, 'AppCoder/vender.html' , {"VFormulario" : VFormulario})
+
+def busquedaAuto(request):
+
+    return render(request, 'AppCoder/busquedaAuto.html')
 
 
