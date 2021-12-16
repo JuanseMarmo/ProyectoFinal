@@ -1,0 +1,42 @@
+{% extends "AppCoder/padre.html" %}
+{% load static %}
+        {% block contenido5 %}
+
+            <h1>Ingrese los datos de su vehiculo</h1>
+            <p>Venda aqui</p>
+
+        {% endblock %}
+
+        {% block contenido %}
+
+            {% if VFormulario.errors %}
+
+            <p>Datos Erroneos</p>
+
+            {% endif %}
+
+            <form action="/AppCoder/vender" method="POST">{% csrf_token %} 
+
+                <!--                 
+
+                <p>Marca: <input type="text" name= "marca"></p>
+                <p>Modelo: <input type="text" name= "modelo"></p>
+                <p>Año: <input type="number" name= "anio"></p>
+                <p>Patente: <input type="number" name= "patente"></p>
+                <p>Color: <input type="color" name= "color"></p>                    
+                -->
+
+                <table>
+
+                {{  VFormulario.as_table  }}
+
+                </table>
+
+
+                <input type="submit" value="Enviar">
+
+            </form> 
+
+
+
+        {%endblock%}
